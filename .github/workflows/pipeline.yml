@@ -33,19 +33,10 @@ jobs:
       - name: Run Tests (pytest)
         run: pytest tests/ -v
 
-        - name: Generate log file (Part 7)
+      - name: Generate log file (Part 7)
         run: |
           mkdir -p logs
-          python -c "
-          from app import create_app
-          import logging
-          app = create_app()
-          with app.test_client() as c:
-              c.get('/greet?name=Pipeline')
-              c.post('/calculate', json={'a': 5, 'b': 3})
-              c.post('/todos', json={'task': 'Test task'})
-          print('Log file generated!')
-          "
+          python generate_logs.py
           cat logs/app.log
 
       - name: Run monitoring script (Part 7)
